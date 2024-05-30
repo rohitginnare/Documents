@@ -1,0 +1,133 @@
+saveCampaign ()  -->
+	// groupingService.saveTargetImei
+	
+	1. campaignToSave = beanConverter.campaignRequestToCampaign(grouping, saveCampaignRequest, true, user);
+			return campaign;
+		then save.
+	2. campaignStepsToSave = beanConverter.campaignRequestToCampaignStep(saveCampaignRequest, savedCamp, true,
+						user);
+			return campaignStepList;
+		//save all campaign steps
+		
+	3. deviceDetailProcessor.processDevicesForAddedCampaign(campaignToSave, campaignStepsToSave, msgUuid);
+	// save campaign 
+	---------------------------
+	
+executionCampaign() -->
+
+processCampaign()  -->
+1. create object of DeviceReport and set the values in the object (APP_SW_VERSION, BASEBAND_SW_VERSION, Config1CIV etc.	)
+DeviceReport dr = new DeviceReport();
+
+2. save device report to DeviceCampaignStatusDTO object -> 
+deviceCampaignStatusDTO.setDeviceReport(dr);
+
+3. // AT command should be triggered in below scenario
+if (!(checkOnlineAndNullStatus(executeRequest.getLiteSentryStatus())
+					&& checkOnlineAndNullStatus(executeRequest.getRiotStatus())
+					&& checkOnlineAndNullStatus(executeRequest.getMaxbotixStatus())
+					&& checkOnlineAndNullStatus(executeRequest.getSteStatus())))
+					
+					
+3. Getting  list of active campaigns for particular device on behalf of device id and organisation name :
+activeCampaignForImei = campaignUtils.checkCampaignForDeviceId(executeCampaignRequest.getDeviceId(),
+					msDeviceRestResponse.getOrganisationName());
+				
+				
+4. // find last step-details of campaign (repo call)
+Long maxStepInCamp =campaignStepRepository.findLastStepInCampaign(campaign.getUuid());
+
+5. // find status of last step : completed/pending (should not be failed)
+String lastStepStatusInThisCamp = stepDeviceDetailRepository.findStatusByCampaignUuidAndStepOrderNumber(
+						campaign.getUuid(), executeCampaignRequest.getDeviceId(), maxStepInCamp);
+					
+6. // find status of last step : completed/pending (should not be failed)
+String lastStepStatusInThisCamp = stepDeviceDetailRepository.findStatusByCampaignUuidAndStepOrderNumber(
+						campaign.getUuid(), executeCampaignRequest.getDeviceId(), maxStepInCamp);
+						
+7. add imeis in "excludeCampaignList" in following conditions : 
+	if (lastStepStatusInThisCamp != null
+						&& (lastStepStatusInThisCamp.equalsIgnoreCase(CampaignStepDeviceStatus.SUCCESS.getValue())
+								|| lastStepStatusInThisCamp.equals((CampaignStepDeviceStatus.REMOVED.getValue()))))					
+...etc.
+
+8. remove all the excludeCampaignList from the active campaign :
+activeCampaignForImei.removeAll(excludeCampaignList);
+
+9. checking conditions :
+	i). size() == 0
+	if (activeCampaignForImei == null || activeCampaignForImei.size() == 0) {
+				logger.info("Message UUID (6) : " + msgUuid + ". Device doesn't belong to any campaign");
+	throw new DeviceVersionException(
+						"Device  " + executeCampaignRequest.getDeviceId() + " doesn't belong to any campaign");
+			}	
+	//Device doesn't belong to any campaign
+	ii). size() == 1
+	//only one campaign in list of activeCampaignForImei
+	
+	iii). if more than one active campaign, then iterate over each campaign :
+
+10. -->  //getting device id, status and step order number
+	List<DeviceCampaignStepStatus> deviceCampaignStepStatus = stepDeviceDetailRepository.getStepsByDeviceCampaign(activeCampaign.getUuid(),
+													executeCampaignRequest.getDeviceId());
+	
+	//Create a Map<Long, List<DeviceCampaignStepStatus>> where the keys are the step_order_number values 
+	and the values are lists of DeviceCampaignStepStatus objects associated with each step_order_number.												
+	Map<Long, List<DeviceCampaignStepStatus>> deviceCampaignStepStatusMap = deviceCampaignStepStatus.stream()
+								.collect(Collectors.groupingBy(w -> w.getStep_order_number()));		
+
+11. // find status of first step for given device id for selected active campaign
+
+	if(deviceCampaignStepStatusMap.get(1l) != null && deviceCampaignStepStatusMap.get(1l).size() >0){
+	campInProgressForGateway = deviceCampaignStepStatusMap.get(1l).get(0).getStatus();
+	}							
+	
+	// fetch all steps data for selected campaign
+		List<CampaignStep> allSteps = campaignStepRepository
+									.getAllStepsOfCampaign(activeCampaign.getUuid());
+
+	// fetch status of second last step where status in not failed
+		String campFinishedForGateway = stepDeviceDetailRepository
+									.findStatusByCampaignUuidAndStepOrderNumber(activeCampaign.getUuid(),
+											executeCampaignRequest.getDeviceId(),
+											allSteps.get(allSteps.size() - 1).getStepOrderNumber());
+	
+12. Check conditions : 
+if (campFinishedForGateway != null) {
+	if (!CampaignStepDeviceStatus.SUCCESS.getValue().equalsIgnoreCase(campFinishedForGateway)
+		&& !CampaignStepDeviceStatus.REMOVED.getValue().equalsIgnoreCase(campFinishedForGateway))
+		
+// execution when second last step is not executed
+	updateToPackageConfigInCampaign(executeCampaignRequest, allSteps,
+											deviceCampaignStatusDTO, msgUuid);
+											
+etc.
+
+	#Inside updateToPackageConfigInCampaign
+	// fetch device detail object where status is not failed
+	currentStepInfo = stepDeviceDetailRepository
+					.findStatusByCampaignUuidAndStepUuid(executeCampaignRequest.getDeviceId(), campStep.getUuid());
+					
+	check conditions :
+	if (currentStepInfo != null && currentStepInfo.getStatus() != null
+					&& (currentStepInfo.getStatus().equals(CampaignStepDeviceStatus.PENDING)))
+	
+	// update status from pending to success for found campaign step
+	deviceCampaignStatusDTO.setLastSuccessStepUUID(currentStepInfo.getUuid());
+				deviceCampaignStatusDTO.setCampaignRunningStatus(CampaignStepDeviceStatus.SUCCESS);
+				currentStepInfo.setStatus(CampaignStepDeviceStatus.SUCCESS);
+				deviceCampaignStatusDTO.setLastSuccessStepUUID(campStep.getUuid());
+				currentStepInfo.setStopExecutionTime(now);
+				stepDeviceDetailRepository.save(currentStepInfo);
+				logger.info("Message UUID (17) : " + msgUuid + ". Device ID " + executeCampaignRequest.getDeviceId()
+						+ " successfully upgraded to package  : " + campStep.getToPackage().getPackageName());
+					}
+	// successfully upgraded to package
+	
+	#updateToPackageConfigInCampaign finished.
+
+13.
+// same call as above for updateToPackageConfigInCampaign
+
+
+current camp, campaign history logic, (mismatch)  -->

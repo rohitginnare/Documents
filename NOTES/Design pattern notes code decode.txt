@@ -1,0 +1,59 @@
+Design pattern
+ 
+ Q) What do we need Design pattern-
+A) As Design Patterns are well documented and understood by software architects, 
+	designers and developers, then their application within a specific solution 
+	will likewise be well understood.
+
+	Patterns give a software developer an array of tried and tested solutions to common problems, 
+	thus reducing the technical risk to the project by not having to employ a new and untested
+	design, thus saving time and effort during the implementation stage of the software 
+	development lifecycle
+
+Q) What are the Creational Patterns?
+Creational design patterns are related to the way of creating objects. 
+This pattern is used to define and describe how objects are created 
+at class instantiation time
+
+Q) What Is Factory Pattern?
+In the Factory pattern, we don't expose the creation logic to the client 
+and refer the created object using a standard interface.
+Example : ProfessionFactory - > Profession -> Engineer, Doctor, Teacher
+Steps:
+1) create main class which call factory class.
+2) Factory class returns required class instance 
+
+Q) What Is Abstract Factory Pattern?
+This factory is also called as factory of factories. 
+Abstract Factory lets a class returns a factory of classes. 
+So, this is the reason that Abstract Factory Pattern is one level higher than the Factory Pattern.
+
+An Abstract Factory Pattern is also known as Kit.
+
+Steps:
+1) create main class which call factory of factory class.
+2) Factory of factory / factory Producer creates instance of factory class.
+3) Factory class returns required class instance 
+
+Q) What Is Singleton Design Pattern?
+	Singleton pattern is one of the simplest design patterns in Java. 
+	This pattern involves a single class which is responsible to create an object 
+	while making sure that only single object gets created. 
+This class provides a way to access its only object which can be accessed directly 
+without need to instantiate the object of the class. 
+
+
+Steps:
+1) create main class which call CacheImpl Class.
+2) CacheImpl class has 2 methods : 1st to load the key value in map and create the cache. 
+	2nd to return the required cloned object.
+3) The main class , parent of all reuired concerete class contains cloning technique. Rest concrete class are normal POJOs, nothing special.
+
+Q) What Is Builder Design Pattern?
+Builder Pattern refers to approach that focuses on constructing a complex object from simple objects using step-by-step approach.
+
+Major roles used in this design patterns are :
+Complex Object / Final Product – e.g. house – complex object which we will generate with builder design pattern
+Builder – abstract class / interface that defines all ways to create the product. It also has getFinalProduct method that will finally return complex object.
+ConcreteBuilder – multiple Builder Impls that will give different final objects which are complex to design,
+Director: Controls complex object creation. It has 2 main goals : 1st to call appropriate concrete builder class to create correct complex object. 2nd to return that complex object.

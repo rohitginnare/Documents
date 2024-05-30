@@ -1,0 +1,73 @@
+JAVA 8 new features :
+-------------------
+
+Default Method | Defender Method : 
+1. Without affecting any implementing classes of the interface, if we want to add any new method , then we should go for the Defauly methods.
+ex- 
+interface Interf 
+{
+	public void m1();
+	public void m2();
+	default void m3()
+	{
+		Syso("Inside Default method.. ");
+	}
+}
+class Test1 implements Interf
+{
+	public void m1(){
+	-------
+	}
+	public void m2(){
+	-------
+	}
+} 
+
+---------------------
+2. If there is already a implementation of a default method then the ovverriding vrsion will execute.
+3. Here default is not a modifier, default will be used to declare a method as default.
+4. Default method we can only declare in the interface(never in the class), bcz in class there is a diferent meaning of the default keyword.
+5. We cannot override Object class methods( toString(), hashCode(), equals() etc. ) as the default methods.
+6. If we implement two interface in our class, and both the inf=terfaces having the same named methods, then we have to providing implementation for that one implemented method.
+ex- interface I1 
+{
+	default void m1();
+}
+interface I2 
+{
+	default void m1();
+}
+class Test implements I1, I2{
+// 	I1.super.m1();
+or
+//	I2.super.m1();
+} 
+___________________________________________________________________________________________________________________
+Interface static method :-
+-------------------------
+
+1. Interface static method can be called only by using Interface name. Because 
+	Interface static methods is available in Interface only, it won't provide any implementation in its child class.
+2. Also without implementing the interface, we can cal interface static method using Interf name. 	
+interface Interf 
+{
+	static void m1(){
+	Syso("Static method in the interface..");
+	}
+}
+
+public class Test implements Interf { 				//implements Intrf is also optional.
+p.s.v.m(String args[])
+{
+	Interf.m1(); // correct
+//	m1();
+//	Test.m1(); // incorrect
+//	Test t = new Test();
+//	t.m1(); // incorrect
+//	
+}
+}
+
+3. If there is no involvement of a class or object of a method, then we can go for interface static method.
+
+___________________________________________________________________________________________________________________

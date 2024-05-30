@@ -1,0 +1,47 @@
+Apache KAFKA : 
+1. Apache Kafka is A msg queue for sending the data from
+ one application to other application.(from producer to Consumer).
+ Apache Kafka is going to act as a msg Queue to exchange the data.
+
+Why Msg queue System:
+Problem: Collecting all the data is not easy as data is generated from the
+	different sources and in various formats(json, img, txt, vdos etc.).
+	Creating the different pipelining system, it is very difficult to exchange the data.
+Solution :  By Using the messaging system, we can store and exchange the data 
+	from different sources to the different applications.
+So the msg queue will act as a mediator to exchange the data.
+
+Publishers : The application which are generating the data are called publishers.
+Subscribers : The applications which are taking the data from the msg queue are called the Subscribers.
+Apache Kafka WORKS ON publishers subscribers model.
+
+Apache Kafka is a distributed streaming platform.
+
+# APIs available in Kafka :
+1. Producer API -> it is used to store the data to the Kafka
+2. Consumer API -> it is used to take the data from the Kafka
+3. Streams API  -> it is used to create the pipeline to take the data from the streams of data
+4. Connector API-> it is used to establish the connection witht the Kafka.
+
+Serializer : Converting the Java object into the Json format.
+De-Serializer : Converting the Json format into the Java object.
+
+
+____________________________________________________________
+
+KAFKA Practical :
+1. Install kafka and Zookeeper
+2. run zookeeper : zookeeper-server-start.bat C:\Users\Rohit_G\Downloads\Kafka\config\zookeeper.properties
+3. run kafka :  kafka-server-start.bat C:\Users\Rohit_G\Downloads\Kafka\config\server.properties
+4. create a kafka topic : kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic my-demo-topic
+** --replication-factor 1** - How many copies of the topic we want to create is defined by the replication factor(Once the consumer comsumes the topic then it will be deleted from the msg queue).
+5. List Topics created : kafka-topics.bat --list --bootstrap-server localhost:9092
+ 
+-----------------------------
+Produce msg on Topic : 
+C:\Users\Rohit_G\Downloads\Kafka\bin\windows>kafka-console-producer.bat --bootstrap-server localhost:9092 --topic customer
+Message : > Welcome to my first topic from Kafka Producer
+
+Check message on consumer : C:\Users\Rohit_G\Downloads\Kafka\bin\windows>kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic customer --from-beginning
+Response message : 
+Welcome to my first topic from Kafka Producer

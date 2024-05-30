@@ -1,0 +1,8 @@
+ S : Single responsibility
+ O : Open for extension, closed for modification
+ L : Liskov Substitution
+ I : Interface Segregation
+ D : Dependency Inversion
+ 
+ -----------------------------------------------------------
+ 

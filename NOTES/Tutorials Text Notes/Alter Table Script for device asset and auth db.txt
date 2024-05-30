@@ -1,0 +1,155 @@
+ALTER TABLE `pct_device`.`asset` 
+ADD COLUMN `installation_date` DATETIME NULL DEFAULT NULL AFTER `tag`;
+
+
+ALTER TABLE `pct_device`.`asset_AUD` 
+ADD COLUMN `installation_date` datetime DEFAULT NULL,
+ADD COLUMN `door_type` varchar(255) DEFAULT NULL,
+ADD COLUMN `asset_nick_name` varchar(45) DEFAULT NULL,
+ADD COLUMN `external_length` varchar(255) DEFAULT NULL,
+ADD COLUMN `door_type` varchar(45) DEFAULT NULL,
+ADD COLUMN `no_of_axles` varchar(255) DEFAULT NULL,
+ADD COLUMN `external_length` varchar(45) DEFAULT NULL,
+ADD COLUMN `no_of_tires` varchar(255) DEFAULT NULL,
+ADD COLUMN `no_of_axles` varchar(45) DEFAULT NULL,
+ADD COLUMN `tag` varchar(255) DEFAULT NULL,
+ADD COLUMN `no_of_tires` varchar(45) DEFAULT NULL,
+ADD COLUMN `tag` varchar(45) DEFAULT NULL;
+ 
+ 
+ ALTER TABLE `pct_device`.`asset_device_xref` 
+ ADD COLUMN `comment` varchar(255) DEFAULT NULL;
+ 
+ 
+ 
+ CREATE TABLE `customer_report_sequence` ( `record_id` bigint NOT NULL AUTO_INCREMENT, 
+ `customer_gateway_seq_num` bigint NOT NULL, `customer_id` varchar(255) NOT NULL,
+ `customer_report_seq_num` bigint NOT NULL, `date_added` datetime NOT NULL,
+ `default_json` text NOT NULL, `device_id` varchar(255) NOT NULL,
+ `gateway_seq_num` int NOT NULL, `raw_report` text, PRIMARY KEY (`record_id`) ) 
+ ENGINE=InnoDB AUTO_INCREMENT=50316 DEFAULT CHARSET=ut f8mb4 COLLATE=utf8mb4_0900_ai_ci;
+ 
+
+ ALTER TABLE `pct_device`.`device` 
+ ADD COLUMN  `salesforce_order_id` varchar(255) DEFAULT NULL,
+ ADD COLUMN `is_deleted` tinyint(1) DEFAULT '0', 
+ ADD COLUMN `last_perform_action` varchar(255) DEFAULT 'Updated', 
+ ADD COLUMN `time_of_last_download` datetime DEFAULT NULL,
+ ADD COLUMN `device_details_id` varchar(50) DEFAULT NULL,
+ ADD COLUMN `installation_date` datetime DEFAULT NULL,
+ ADD COLUMN `installed_status_flag` varchar(255) DEFAULT NULL,
+ ADD COLUMN `old_mac_address` varchar(255) DEFAULT NULL,
+ ADD COLUMN `config_name` varchar(255) DEFAULT NULL;
+ 
+ 
+ 
+ALTER TABLE `pct_device`.`device_AUD` 
+ADD COLUMN `salesforce_order_id` varchar(255) DEFAULT NULL,
+ADD COLUMN`is_deleted` tinyint(1) DEFAULT '0',
+ADD COLUMN `last_perform_action` varchar(255) DEFAULT 'Updated',
+ADD COLUMN `time_of_last_download` datetime DEFAULT NULL,
+ADD COLUMN `installed_by` bigint DEFAULT NULL,
+ADD COLUMN `purchase_by` varchar(255) DEFAULT NULL,
+ADD COLUMN `purchase_by` bigint DEFAULT NULL,
+ADD COLUMN `installation_date` datetime DEFAULT NULL,
+ADD COLUMN `old_mac_address` varchar(45) DEFAULT NULL,
+ADD COLUMN `config_name` varchar(45) DEFAULT NULL;
+  
+  
+  
+ALTER TABLE `pct_device`.`device_details` 
+ADD COLUMN `aux_power` bigint DEFAULT NULL,
+ADD COLUMN `gps_status` varchar(255) DEFAULT NULL,
+ADD COLUMN `main_power` bigint DEFAULT NULL,
+ADD COLUMN `report_id` bigint DEFAULT NULL;
+  
+  
+   CREATE TABLE `device_sensor_xref` ( `id` bigint NOT NULL AUTO_INCREMENT,
+  `created_on` datetime DEFAULT NULL, `updated_on` datetime DEFAULT NULL, 
+  `date_created` datetime DEFAULT NULL, `date_deleted` datetime DEFAULT NULL,
+  `is_active` bit(1) DEFAULT NULL, `created_by` varchar(255) DEFAULT NULL, `updated_by` varchar(255) DEFAULT NULL, `device_uuid` varchar(255) DEFAULT NULL, `sensor_uuid` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`) ) ENGINE=InnoDB AUTO_INCREMENT=272742 DEFAULT CHARSET=u tf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  
+  
+  
+ALTER TABLE `pct_device`.`maintenance_report_history` 
+ADD COLUMN `mac_address` varchar(255) DEFAULT NULL,
+ADD COLUMN `position` varchar(255) DEFAULT NULL, 
+ADD COLUMN `sensor_uuid` varchar(255) DEFAULT NULL,
+ADD COLUMN `uuid` varchar(255) DEFAULT NULL;
+   
+   
+   CREATE TABLE `maintenance_report_history_aud` ( `id` bigint NOT NULL, `rev` int NOT NULL, 
+   `revtype` tinyint DEFAULT NULL, `created_date` datetime DEFAULT NULL, 
+   `new_sensor_id` varchar(255) DEFAULT NULL, `old_sensor_id` varchar(255) DEFAULT NULL,
+   `resolution_type` varchar(255) DEFAULT NULL, `sensor_type` varchar(255) DEFAULT NULL, 
+   `service_date_time` datetime DEFAULT NULL, `validation_time` varchar(255) DEFAULT NULL, 
+   `work_order` varchar(255) DEFAULT NULL, `asset_uuid` bigint DEFAULT NULL, `device_uuid` bigint DEFAULT NULL,
+   `organisation_uuid` bigint DEFAULT NULL, `user_uuid` bigint DEFAULT NULL, 
+   PRIMARY KEY (`id`,`rev`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb 4_0900_ai_ci; ) 
+   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4 _0900_ai_ci;
+   
+   
+   
+   
+    CREATE TABLE `ms1devices` ( `DEVICE_ID` varchar(60) NOT NULL, `OWNER_LEVEL_2` varchar(200) NOT NULL,
+	PRIMARY KEY (`DEVICE_ID`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4 _0900_ai_ci; 
+	
+	
+	
+	CREATE TABLE `organisation_role_mapping` ( `organisation_id` bigint NOT NULL, `oraganisation_role` varchar(255) DEFAULT NULL, KEY `FKgqux95p55fsem5nl3mt5bgbuq` (`organisation_id `),CONSTRAINT `FKgqux95p55fsem5nl3mt5bgbuq` FOREIGN KEY (`organisation_id`) REFERENCES `pct_organisation`.`org anisation` (`id`) ) 
+   ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4 _0900_ai_ci;
+  
+  
+ ALTER TABLE `pct_device`.`sensor_detail` 
+ ADD COLUMN `old_sensor_id` varchar(255) DEFAULT NULL,
+UNIQUE KEY `UK_ocp1pnu6l24vuvnwuowtcsp7r` (`uuid`);
+	
+	
+	
+	CREATE TABLE `sensor_detail_aud` ( `id` bigint NOT NULL, `rev` int NOT NULL, 
+	`revtype` tinyint DEFAULT NULL, `at_command_status` varchar(255) DEFAULT NULL, 
+	`at_command_uuid` varchar(255) DEFAULT NULL, `device_id` varchar(255) DEFAULT NULL, 
+	`new_senso_id` varchar(255) DEFAULT NULL, `position` varchar(255) DEFAULT NULL, 
+	`product_code` varchar(255) DEFAULT NULL, `sensor_id` varchar(255) DEFAULT NULL, 
+	`sensor_pressure` varchar(255) DEFAULT NULL, `sensor_temperature` varchar(255) DEFAULT NULL,
+	`status` varchar(255) DEFAULT NULL, `type` varchar(255) DEFAULT NULL, `uuid` varchar(255) DEFAULT NULL, 
+	`vendor` varchar(255) DEFAULT NULL, `created_by` bigint DEFAULT NULL, `updated_by` bigint DEFAULT NULL, 
+	`sensor_uuid` bigint DEFAULT NULL, `old_sensor_id` varchar(45) DEFAULT NULL, 
+	PRIMARY KEY (`id`,`rev`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4 _0900_ai_ci;
+	
+	
+	
+	------------------------------------
+	AUTH :
+	
+	ALTER TABLE `pct_auth`.`role` 
+	ADD COLUMN `role` VARCHAR(255) NULL DEFAULT NULL AFTER `id`;
+	
+	
+	ALTER TABLE `pct_auth`.`user` 
+	ADD COLUMN `role_id` bigint DEFAULT NULL,
+	KEY `FKn82ha3ccdebhokx3a8fgdqeyy` (`role_id`),
+	CONSTRAINT `FKn82ha3ccdebhokx3a8fgdqeyy` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`);
+	 
+	 
+	CREATE TABLE `work_order` ( `id` bigint NOT NULL AUTO_INCREMENT, 
+	 `location_uuid` varchar(255) DEFAULT NULL, `work_order` varchar(255) DEFAULT NULL, 
+	 `created_on` datetime DEFAULT NULL, `updated_on` datetime DEFAULT NULL, 
+	 `end_date` datetime DEFAULT NULL, `start_date` datetime DEFAULT NULL,
+	 `status` varchar(255) DEFAULT NULL, `install_history` varchar(255) DEFAULT NULL, 
+	 `uuid` varchar(255) DEFAULT NULL, `install_code` varchar(255) DEFAULT NULL,
+	 `maintenance_uuid` varchar(255) DEFAULT NULL, PRIMARY KEY (`id`), 
+	 KEY `FK5v5sasuf4bletvm2jbruo9ij4` (`install_history`), CONSTRAINT `FK5v5sasuf4bletvm2jbruo9ij4` 
+	 FOREIGN KEY (`install_history`) REFERENCES `pct_installer_ms`.`inst all_history` (`uuid`) ) 
+	 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_ 0900_ai_ci;
+	 
+	 
+	 
+	 
+	 
+  
+  
+ 
+ 
+ 

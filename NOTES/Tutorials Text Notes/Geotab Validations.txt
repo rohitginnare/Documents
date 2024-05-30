@@ -1,0 +1,131 @@
+Create API validations :
+1. Device Id should not be null/empty
+ 
+2. Get all devices from DeviceProcessingMasterDTO
+	all devices should not be empty.
+
+3. Iterate over devices and get device Ids
+
+4. Now the existing devices we get should not be NULL/Empty.
+
+5. If existing devices are null then add the device to the unregistered devices list,
+   else put the devices into to the registered devices map.
+
+6. If Geotab serial number is blank, then put the device into unregistered devices. 
+
+7. If mail sending error, then add the devices to DevicesToSendInMail.
+
+*8. If device state is terminated and isDeleted is true then we will send devices to reprovision.
+
+
+---> processDevice(List<Device> devices, String uuid)
+*9. After processing deice we will check all the devices product code that should be same(HK Based or EG Based)
+	before sending mail.
+	
+10. Then we will filterDevicesToSendInMail-->
+
+11. Iterate over the unregistered devices and check if geotab serial number is empty, 
+	then add the devices into the devicesToSendInMail list.
+
+
+---> sendCsvAsMail(dto.getDevicesToSendInMail());
+12. if reseller is null or reseller email is Empty then we will throw RESELLER_EMAIL_NOT_FOUND exception
+	otherwise we will send email on basis of 
+				mailUtil.sendMail(devices, reseller.getEmail(), fetchManufactureMail());
+
+
+13. Save all devices from allDevicesToSave list.
+
+14. check if GSN is null/empty, if true then throw 
+	exception "One or more device(s) failed to register on Geotab".
+			
+-----------------------------------------------------------------------------------------------------------
+********reprovisionErrorDevice by device id**********
+
+1. Find device by device id, if found proceed further, else throw exception "Device not found".
+
+2. Throw BadRequestException("The Device is already active with Geotab") when,
+	CurrentState() != null and communicatioStatus is active('A'), 
+	OR getGeotabSerialNo != null and GSN is not empty.
+	
+3. ---> processDevice(devices, UUID);
+
+4. if proess done, then will get response as "Device processed successfully";
+
+--------------------------------------------------
+***********softDeleteDevice**************
+1. Find device by device id,
+2. If isdeleted is true and not null then throw exception "Unable to delete already in deleted state".
+
+3. proceeding further, Set isDeleted as TRUE.
+
+4. Check : if deviceid doesn't contains "-old", then append it with timestamp
+			{newDeviceId = id + "-old-" + now.toEpochMilli()}
+
+5. updateDeviceOnDelete on behalf of deviceid and newDeviceId
+
+---> updateDeviceOnDelete()
+6. get the device by deviceid and delete the device.
+
+7. Check if GSN found, if not throw "GSN not found for deviceid" and set isTerminated as TRUE and save the device.
+
+8. Get the enable termination from reseller and check :
+	if enable termination is true then terminate device on Geotab. else sendDeleteDeviceMail.
+
+---> terminateDeviceOnGeotab(device, reseller)
+9. 	Get Geotab session for reseller. check :
+	if geotab session is null/empty, then throw exception "GEOTAB_LOGIN_ERROR_TERMINATION"
+	else 
+10. -->preparePayloadForTermination
+	If prepared payload is empty, then throw Exception("Error in creating payload for Geotab")
+	else request the Geotab API for termination of device with id.	
+	
+11. If Geotab response json contains error then set communicatioStatus as FALSE. 
+	else set communicatioStatus as TRUE.
+
+-------------------------------------------------------
+*********requestTerminateDevice**********
+
+1. Get device by device Id and check 
+	if null then, device not found exception.
+	
+2. If isTerminated is true and not null then throw exception "Unable to terminate already in terminated state".
+
+3. If Geotab serial number is empty, then throw Exception "Unable to terminated an unregistered device."
+
+--->  requestDeviceTermination(device)
+
+4. Get enable termination from reseller and check :
+	if enable termination is true then terminate device on geotab 
+	---> terminateDeviceOnGeotab(device, reseller)
+5. 	Get Geotab session for reseller. check :
+	if geotab session is null/empty, then throw exception "GEOTAB_LOGIN_ERROR_TERMINATION"
+	else 
+6. -->preparePayloadForTermination
+	If prepared payload is empty, then throw Exception("Error in creating payload for Geotab")
+	else request the Geotab API for termination of device with id.	
+	
+7. If Geotab response json contains error then set communicatioStatus as FALSE. 
+	else set communicatioStatus as TRUE.
+	
+	if status is TRUE : "Termination of the Device is successfully completed"
+	if FALSE : "Termination of the Device is failed. Please check communication logs for details."
+	
+------------------------------------------------------------------
+
+**********requestTerminateDeviceBulk***********
+1. Get list of devices and eterate over the devices :
+
+checks:
+2. If device is null then Device not found exception.
+3. If isDeleted is not null and isDeleted is true and isTerminated is not null and isTerminated is true,
+	then "Unable to terminate the device. Device already in terminated state."
+	
+4. If GSN is Empty then : "Unable to terminated an unregistered device."
+5. 
+
+
+
+if (device.getIsDeleted() != null && device.getIsDeleted() && device.getIsTerminated() != null
+						&& device.getIsTerminated()) {
+				

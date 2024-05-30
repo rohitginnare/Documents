@@ -1,0 +1,17 @@
+CIRCUIT BREAKER PATTERN :
+To avoid the challenges of MS 
+ripple effect
+
+Resilient : 
+
+Cascading failures avoid
+
+Fall back mechanism - return logical messages
+
+if the response not in particular interval, then CBP block requests incoming
+
+till that time CBP request to the service closed for checking, called self-healing
+
+Time consumption time in response of failures
+
+
