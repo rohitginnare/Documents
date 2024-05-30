@@ -1,0 +1,6 @@
+npm install
+npm cache clean --force
+npm i @agm/core@1.0.0
+
+npm start
+

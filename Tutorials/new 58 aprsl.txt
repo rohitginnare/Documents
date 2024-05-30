@@ -1,0 +1,45 @@
+RATINGS :
+1. Job Knowledge: Demonstrated a strong understanding of Java development principles 
+	and consistently applied them to deliver high-quality results.
+	
+2. Work Quality: I consistently maintain a high level of accuracy and attention to detail in all my tasks.
+3. Attendance and Punctuality: I consistently maintain excellent attendance and punctuality, 
+	ensuring I am present and ready to contribute to the team's success.
+4. Productivity: I consistently demonstrate a high level of productivity by efficiently completing tasks 
+	and consistently meeting or exceeding goals.
+
+5. Communication and Listening: I communicate clearly and listen attentively, ensuring effective and 
+	smooth communication with my team and others involved in the work.
+6. Dependability: Consistently demonstrated reliability and accountability in meeting deadlines 
+	and fulfilling responsibilities.
+OR 
+	Dependability: I am consistently reliable and responsible, always fulfilling my duties 
+	and meeting expectations with trustworthiness and accountability.
+	
+	-----------------------------------------------------------------------------------------------
+Question 1: Do you feel connected to the company's values and mission?
+
+Strongly Agree: I strongly feel connected to the company's values and mission, and they align with my own beliefs and goals.
+
+Question 2: Do you feel that the company values your work and contributions?
+
+Agree: I agree that the company values my work and contributions. I receive acknowledgement and feedback that indicate my efforts are appreciated.
+
+3rd question : Are you satisfied with the job security that the company provides
+Agree: I am satisfied with the job security that the company provides.
+
+4th Question : Does your manager value your feedback/suggestions?
+Agree: My manager values my feedback/suggestions.
+
+5th Question : Do you feel connected to your co workers
+Agree: I feel connected to my coworkers.
+
+6th Question : How frequently do you feel stressed or burnt out to you work ?
+Occasionally: I occasionally feel stressed or burnt out due to my work.
+
+7th question : Do you think you have a good work life balance in your current position at the company.
+Yes: I believe I have a good work-life balance in my current position at the company.
+
+8th Question : How likely is it that you would recommend this company to your friends, family or others?
+Likely: I am likely to recommend this company to my friends, family, or others.
+

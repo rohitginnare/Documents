@@ -1,0 +1,41 @@
+Device Report,
+Device detail list,
+Latest maintenance report,
+Redis ,
+findStatusByCampaignUuidAndDeviceId
+
+
+
+"device_campaign_histories": [
+        {
+            "campaing_name": "Test",
+            "last_step": "12-dec-p1 To 12-dec-p2",
+            "last_step_time": "2022-12-11T18:51:27Z",
+            "campaing_status": "Not Started",
+            "last_step_status": "Pending",
+            "config1_crc": "ANY",
+            "config1_civ": "ANY",
+            "config2_crc": "ANY",
+            "config2_civ": "ANY",
+            "config3_crc": "ANY",
+            "config3_civ": "ANY",
+            "config4_crc": "ANY",
+            "config4_civ": "ANY",
+            "baseband_sw_version": "1.0.1.1",
+            "app_sw_version": "1.1.0.1",
+            "ble_version": "1.0.0.1"
+			
+			"campaignStepDeviceDetails" :[
+				{ 
+					"uuid":"",
+					"device_id":"",
+					"campaign_uuid":"",
+					""
+				},
+				{
+				}
+			]
+			
+			
+        }
+    ],

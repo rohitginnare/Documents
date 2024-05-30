@@ -1,0 +1,52 @@
+Serialization in Java :
+The process of saving the state of a object to a file is called Serialization.
+The process of reading the state of a object from a file is called de-serialization.
+
+-----------------------
+Example : Large baloon(with air )------------Transport to Banglore --(without air)------------> SRIALIZATION
+		Baloon reached banglore-------------(air blown)------------- (Get the required baloon)-------> DESERIALIZATION
+		
+		Technical terminology : The process of saving the object from Java supported form to file supported form or network supported form is called Serialization.
+		AND The processof converting the object from file supported form the Java supported form is called De-serialization.
+		
+How we can implement Serialization :
+-> By using FileOutputStream and ObjectOutputStream(contialns ObjectOutputStream.writeObject(obj) method), we can implement Serialization.
+
+How we can implement De-serialization :
+-> By using FileInputStream and ObjectInputStream(contains ObjectInputStream.readObject(obj) method), we can implement De-serialization.
+
+
+{MARSHALLING in serialization in network }
+
+Program :
+package org.example;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.*;
+import java.sql.SQLOutput;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.StringTokenizer;
+
+//JAVA Serialization and De-serialization
+class Dog implements Serializable {
+    int i=10;
+    int j=20;
+}
+public class Main {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        System.out.println("Given String : Hello world\nOutput :");
+        Dog d1 = new Dog();
+        FileOutputStream fos = new FileOutputStream("abc.ser");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(d1);
+
+        FileInputStream fis = new FileInputStream("abc.ser");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        Dog d2= (Dog) ois.readObject();
+
+        System.out.println(d2.i+".........."+d2.j);
+    }
+}

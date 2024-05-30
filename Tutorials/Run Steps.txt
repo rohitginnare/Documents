@@ -1,0 +1,26 @@
+Steps to Run the Project :
+1. maven clean
+2. maven install
+3. run DiscoveryApplication
+4. run GatewayApplication
+5. run AuthApplication
+6. run OrganisationServiceApplication
+7. run DeviceServiceApplication
+8. run DeviceVersionApplication
+
+VS Code :
+1. npm install (to run frontend first time)
+2. npm start (to start application after first time installation)
+   If  Compiled successfully, then
+3. browse this URL : http://localhost:4200/ ( username : abhishek@leafnode.io, Pass. : passme)
+
+create two Package, current version pkg, new version pkg. : 
+save both packages, 
+create campaign, to execute campain to upgrade or downgrade.
+
+ng serve
+
+
+
+campaign : used to "upgrade" or "downgrade" the versions of the devices installed
+ctrl+Shift+R : search over the whole project

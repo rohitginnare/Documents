@@ -1,0 +1,88 @@
+package com.pct.parser.TLV;
+
+import java.nio.ByteOrder;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import com.google.gson.Gson;
+import com.pct.parser.model.GladhandsSensor;
+import com.pct.parser.utils.Messages;
+import com.pct.parser.utils.Numbers;
+
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+public class GladhandsSensorTLV extends BaseTLV<GladhandsSensor> {
+
+	private int selector;
+	
+	@Autowired
+	GladhandsSensor gladhandssensorinfo;
+
+	private byte[] gladhand;
+	
+	private final Map<Integer, String> C_STATUSES = new HashMap<Integer, String>() {
+		{
+			put(0, "Initializing");
+			put(1, "Not Installed");
+			put(4, "Offline");
+			put(12, "Online");
+		}
+	};
+	private final Map<Integer, String> LOCK_STATUS = new HashMap<Integer, String>() {
+		{
+			put(0, "Locked");
+			put(1, "Unlocked");
+		}
+	};
+	
+	public transient ByteOrder transByteOrder = ByteOrder.BIG_ENDIAN;
+
+	@Override
+	public GladhandsSensor parseTlv(String uuid) {
+		try {
+			gladhand = new byte[valueLength];
+			System.arraycopy(report, payloadIndex, gladhand, 0, valueLength);
+			if ((gladhand != null) && (gladhand.length > 0)) {
+				int bytePosition = 0;
+				byte selectorStatusByte = gladhand[bytePosition];
+				int selector = (selectorStatusByte >>> 4) & 15;
+				int statusValue = selectorStatusByte & 15;
+				gladhandssensorinfo.c_status = C_STATUSES.get(statusValue);
+				bytePosition += 1;
+				if (statusValue == 0xC) {
+					try {
+						//Map for Locked Status 
+							int lockStatusValue = Numbers.parseInt(gladhand, bytePosition, 1, this.transByteOrder);
+							gladhandssensorinfo.lockStatus = LOCK_STATUS.get(lockStatusValue);
+					}catch (Exception e) {
+						// Messages.LogListenerErrorsToFile("Exception in decoding Gladhands Sensor TLV "
+						// + StringUtilities.Byte2HexString(gladhand));
+					}
+				}
+			}
+			gladhandssensorinfo.id = 1574L;
+			gladhandssensorinfo.selector = (int) selector;
+			gladhandssensorinfo.name = "Gladhands Sensor";
+			gladhandssensorinfo.displayName = "Gladhands Sensor";
+			gladhandssensorinfo.receivedTimeStamp = receivedTimeStamp;
+			return gladhandssensorinfo;
+		} catch (Exception e) {
+			Messages.LogListenerErrorsToFile("Message UUID :" + uuid +"Exception occured in Gladhands Sensor TLV: "+Messages.GetExceptionInfo(e));
+			return null;
+		}
+	}
+
+	@Override
+	public void toJson() {
+		if (gladhandssensorinfo != null) {
+			Gson gson = new Gson();
+			String jsonString = gson.toJson(gladhandssensorinfo);
+			System.out.println(gladhandssensorinfo);
+		}
+	}
+}

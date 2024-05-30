@@ -1,0 +1,41 @@
+JAVA 8 Date and Time API :
+Until java 1.7 if we want to represent Date and Time values, then we were using
+java.util.Date, java.util.Calender, Timestamp classes which were not very effiecient w.r.t.
+performance and convinience.
+
+So New Java Date and Time API of JAVA 8, we can overcome this problem.
+Some of the classes are depricated and it is suggsted to use new JODA apis.
+
+--------------
+
+1. How to represent Current system date :
+	LocalDate date = LocalDate.now();
+
+2. How to represent Current system Time :
+
+	LocalTime date = LocalTime.now();
+
+import java.time.*;
+public class Test
+{
+	public static void main(String args[])
+	{
+		// To represent Current system Date 
+		LocalDate date = LocalDate.now();
+		System.out.println("Current System date is : "+date);
+		
+		// To represent current system time
+		LocalTime time = LocalTime.now();
+		System.out.println("Current System Time is : "+time);
+
+		// To get Day, month and Year from Date
+		LocalDate date1 = LocalDate.now();
+		int dd = date1.getDayOfMonth();
+		int mm = date1.getMonthValue();
+		int yyyy = date1.getYear();
+		
+		System.out.println("Date in our own format is : "+dd+"..."+mm+"..."+yyyy); // printing our own format
+		System.out.printf("%d-%d-%d", dd, mm, yyyy);
+	
+	}
+}

@@ -1,0 +1,7 @@
+git clone <URL>
+git checkout <BRANCH NAME>
+
+git stash --> removes the local changes
+git checkout <fileName> -->  removes the local changes 
+
+git diff <fileName> --> to see changes 

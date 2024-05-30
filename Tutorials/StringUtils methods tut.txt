@@ -1,0 +1,23 @@
+StringUtils class methods :
+package to import
+import org.apache.commons.lang3.StringUtils;
+
+String myString = "Hello World";
+1. boolean b = StringUtils.containsAny(myString, 'a', 'b', 'c');  	// return false, bcz, a or b or c not prosent in it .
+
+2. boolean b = StringUtils.containsAny(myString, "mfjer"); // true, bcz, e is present in the given sting.
+
+3. boolean b = StringUtils.containsIgnoreCase(myString, "hello"); //true
+
+4. StringUtils.countMatches(myString, "l"); // return 3, 'l" present 3 times.
+	
+	//If and only if String is missing 
+5. StringUtils.prepentIfMissing(myString, "www."); // return "www.Hello World"
+
+6. StringUtils.appendIfMissing(myString, ".com"); // return "Hello World.com"
+
+// Upper to Lower case and vise versa
+7.  StringUtils.swapCase(myString); // return "hELLO wORLD"
+
+	// Capitalize 1st letter og each word in a String 
+8. StringUtils.capitalize("Hello my name is rohit");
