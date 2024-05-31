@@ -1,0 +1,13 @@
+git configuration commands :
+-------------------- Taher Ali -----------------------------
+git config --global user.name "taherali2024"
+git config --global user.email "tali@catraktech.com"
+git config --global user.password "918237686252t"
+NOTE : Also do changes in Windows Credential manager
+
+
+------------------- ROHIT GINNARE ---------------------------
+git config --global user.name "rohitginnare"
+git config --global user.email "rohitmalakar07@gmail.com"
+git config --global user.password "Rohit@Github0210"
+NOTE : Also do changes in Windows Credential manager
