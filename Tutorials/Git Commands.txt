@@ -5,3 +5,87 @@ git stash --> removes the local changes
 git checkout <fileName> -->  removes the local changes 
 
 git diff <fileName> --> to see changes 
+
+git log : see all commits 
+git log ---graph : graphical representation
+git log ---graph --oneline : graphical representation in one line
+
+$$$$ GREAT Learning $$$$
+############################# GIT BRANCH #########################
+To list all branches
+- git branch -a 
+
+To create a branch :
+- git branch <branch-name>
+
+To delete a branch :
+- git branch -d <branch-name>
+
+To rename a branch :
+-	git checkout <branch-name>
+-	git branch -m <new-name-for-branch>
+
+To create and checkout to the branch:
+- 	git chckout -b <new-branch-name>
+
+---------------------------------Adding project : STEPS -------------------------------------------------------------	
+Steps to add local directory project to remote git repository :
+1. git init : To initialize the git branch on Local(It will create a .git folder)
+2. git add . : To stage all the data in the local repository 
+3. git commit -m "commit message" : Commit changes to local machine
+4. git push : To Push the local changes to remote repository
+NOTE : git push will give error as we have not added our branch to remote Repository, so
+	   to add local brach to remote repository we will execute -
+	- git remote add origin <url-of-remote-git-repository>
+	   
+5. Now execute git push, it will ask for --set-upstream, so execute :
+	- git push --set-upstream origin <master>(master is remote branch)
+----------------------------------------------------------------------------------------------	
+To see the content in the file :
+- cat <file-name>
+
+To edit a file (nano editor):
+- nano <file-name>
+
+####################### GIT MERGE ####################################
+
+To merge a branch A to Branch B :(No changes commited before)
+- git checkout to Branch B
+- git merge <branch-A-name> (No Merge commit has been created, check using git log) this is called forward.
+
+To see all the commits in a branch :
+- git log
+
+git merge 2nd time :(some changes already present in Master branch)
+- git merge <branch-name> it will open the editor to write commit message.
+so, insert whatever message we want by entering insert button and close editor using ctrl+c and :wq(write & quit)
+
+Now, New merge commit will be created 
+
+
+######################## MERGE CONFLICTS ################################
+To see the merge conflict changes :
+- git mergetool -t vimdiff 
+
+If we want to commit something in an existing file then we will get merge conflicts, to resolve it just change the code according and commit the changes 
+  
+  
+########################### Rebasing ########################################
+The git rebase command allows a user to shift a set of commits and given them a new base.
+It is similar to git merge but the difference here is that the history of the commits in the branch is 
+also carried over when it is joined with the current branch.
+
+
+Rebasing is just copying the commits of one branch to another branch with its commit history. The extra commits
+ will also be there to the branch where we have rebase our branch.
+ - 	 git checkout master(in the master branch)
+ -	 git rebase develop(adding commits of the develop branch into the master branch)
+ 
+ 
+ 
+########################## Git WORKFLOW ##################################
+-> master
+-> hotfix (Production issues resolve here)
+-> release (Code reviews bugs commits here )
+-> develop (development)
+-> feature branches 
