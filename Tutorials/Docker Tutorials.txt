@@ -1,0 +1,38 @@
+################### Docker ################### 
+Dockeris a containarization platform which packages your applications and all it's dependencies together
+in the form of containers, so as to ensure that the application works seemlesly in any environment(dev, uat or Prod).
+
+Container : Heance container contains a complete ecosystem of your project- including the appli-
+cation, it's dependencies and everything which is needed for an application to run on Server.
+
+This guarantes that the software will always run the same, regardless of it's environment.
+
+Flow :
+1. create a Docker file.
+2. build the docker file using docker build ,then image is created(read only).
+3. run the image, the container will be created(also called runnable instance of an image).
+
+########################### Docker File ##########################################
+Q. What is Docker File :
+This is a text file which provides a set of instructions to build a Docker image, including 
+- operating system
+- languages,
+- Env. variables,
+- file locations, 
+- network ports,
+- and any other components need to run a docker image.
+
+Each time a command is run in Docker file, a new layer is created in top of the previous layer. 
+This allows Docker Images to be build incrementally. 
+----------------------
+############ Docker Image ################
+When we run the docker file the Docker Image will be created :
+Docker Images are the read-only templates used to build containers. 
+Images also contains metadata that describes the container's capabilities and needs.
+
+* Create a docker image suing command 'docker build'. 
+* Whenever we pass the DockerFile to the docker build command, then the Docker deamon will 
+create a Docker image according to the docker file instructions.
+* Docker Files can not be executed by themselves and can not run or start.
+  It is just a blueprint for creating docker containers.
+
